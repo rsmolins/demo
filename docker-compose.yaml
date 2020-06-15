@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./enovy-reverse-proxy.yaml
+        target: /etc/envoy.yaml
+    expose:
+      - "8001"
+    ports:
+      - "8001:8001"
+  squid:
+    build:
+      context: .
+      dockerfile: Dockerfile_squid
+    volumes:
+      - type: bind
+        source: ./squid.conf
+        target: /etc/squid/squid.conf
+    expose:
+      - "3128"
+    ports:
+      - "3128:3128"
+
